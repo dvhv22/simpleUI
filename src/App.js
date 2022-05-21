@@ -1,41 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
+
   theme,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+
+
+import Header from './components/Header';
+import BodyPart from './components/BodyPart';
+import Footer from './components/Footer';
+import ModalSignIn from './components/ModalSignIn';
+
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+  const [showSignin, setShowSignin] = useState(0);
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <>
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+
+
+          {showSignin === 0 ? (
+            <>
+              <Header showSignin={showSignin} setShowSignin={setShowSignin} />
+              <BodyPart />
+              <Footer />
+            </>
+          ) : showSignin === 1 ? (
+            <ModalSignIn showSignin={showSignin} setShowSignin={setShowSignin} />
+          ) :
+            <>
+            </>
+
+          }
+
+
+
+
+
+        </QueryClientProvider>
+
+
+      </ChakraProvider>
+    </>
+
   );
 }
 
