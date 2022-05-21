@@ -13,10 +13,13 @@ function ModalSignIn({ showSignin, setShowSignin }) {
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleNameChange = (e) => setName(e.target.value);
     const handleOnSubmit = () => {
-        if (name !== '' && email !== '') {
+
+
+        if (name && email) {
             let copy = { name: name, email: email };
             setUser(copy);
             setShowSignin(0);
+
 
             // setName('');
             // setEmail('');
@@ -34,51 +37,54 @@ function ModalSignIn({ showSignin, setShowSignin }) {
         <>
             <Button onClick={() => setShowSignin(0)}>Back</Button><br /><br />
             <Box alignItems={'center'} w='50%' p={'50px'}>
-                <FormControl isRequired isInvalid={isErrorName}>
+                <form onSubmit={e => e.preventDefault()} >
+                    <FormControl isRequired isInvalid={isErrorName}  >
 
-                    <FormLabel htmlFor='name'>Name</FormLabel>
-                    <Input
-                        id='name'
-                        type='text'
-                        value={name}
-                        onChange={handleNameChange}
-                        placeholder='enter your name'
-                    />
-                    {!isErrorName ? (
-                        <FormHelperText>
-                            Enter your name.
-                        </FormHelperText>
-                    ) : (
-                        <FormErrorMessage>Name is required.</FormErrorMessage>
-                    )}
-                </FormControl>
-                <br /><br />
-                <FormControl isRequired isInvalid={isErrorEmail} >
+                        <FormLabel htmlFor='name'>Name</FormLabel>
+                        <Input
+                            id='name'
+                            type='text'
+                            value={name}
+                            onChange={handleNameChange}
+                            placeholder='enter your name'
+                        />
+                        {!isErrorName ? (
+                            <FormHelperText>
+                                Enter your name.
+                            </FormHelperText>
+                        ) : (
+                            <FormErrorMessage>Name is required.</FormErrorMessage>
+                        )}
+                    </FormControl>
+                    <br /><br />
+                    <FormControl isRequired isInvalid={isErrorEmail} >
 
-                    <FormLabel htmlFor='email'>Email</FormLabel>
-                    <Input
-                        id='email'
-                        type='email'
-                        value={email}
-                        onChange={handleEmailChange}
-                        placeholder='enter your email'
-                    />
-                    {!isErrorEmail ? (
-                        <FormHelperText>
-                            Enter the email.
-                        </FormHelperText>
-                    ) : (
-                        <FormErrorMessage>Email is required.</FormErrorMessage>
-                    )}
-                    <br />
+                        <FormLabel htmlFor='email'>Email</FormLabel>
+                        <Input
+                            id='email'
+                            type='email'
+                            value={email}
+                            onChange={handleEmailChange}
+                            placeholder='enter your email'
+                        />
+                        {!isErrorEmail ? (
+                            <FormHelperText>
+                                Enter the email.
+                            </FormHelperText>
+                        ) : (
+                            <FormErrorMessage>Email is required.</FormErrorMessage>
+                        )}
+                        <br />
 
-                    <Button colorScheme='teal'
-                        type='submit' onClick={(e) => handleOnSubmit}>Submit</Button>
+                        <Button colorScheme='teal' onClick={handleOnSubmit}
+                            type='button' >Submit</Button>
 
 
-                </FormControl>
-                <br />
-                {/* <Button type="button" onClick={() => handleOnSubmit}>Submit</Button> */}
+
+                    </FormControl>
+
+                </form>
+
 
             </Box>
 
