@@ -1,34 +1,41 @@
 import React, { useState } from "react";
 
 import { Button, FormControl, FormLabel, Input, FormHelperText, FormErrorMessage, Box } from "@chakra-ui/react";
+import { useDispatch } from 'react-redux';
+import { userAdded } from '../features/usersSlice';
 
 
 
-function ModalSignIn({ showSignin, setShowSignin }) {
+function SignUp({ showSignin, setShowSignin }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [user, setUser] = useState({});
+    const [newUser, setNewUser] = useState([]);
+    const [age, setAge] = useState();
+
+    const dispatch = useDispatch();
 
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleNameChange = (e) => setName(e.target.value);
+    const handleAgeChange = (e) => setAge(e.target.value);
     const handleOnSubmit = () => {
 
 
         if (name && email) {
-            let copy = { name: name, email: email };
-            setUser(copy);
-            setShowSignin(0);
+            let copy = { name: name, email: email, age: age };
+            let arrCopy = [...newUser, copy];
+            setNewUser(arrCopy);
+            dispatch(userAdded(name, email, age));
 
-
-            // setName('');
-            // setEmail('');
+            setName('');
+            setEmail('');
+            setAge('');
         }
 
     }
 
-
-
+    // const canSave =
+    //     [name, email].every(Boolean);
     const isErrorEmail = email === '';
     const isErrorName = name === '';
 
@@ -74,9 +81,24 @@ function ModalSignIn({ showSignin, setShowSignin }) {
                         ) : (
                             <FormErrorMessage>Email is required.</FormErrorMessage>
                         )}
-                        <br />
+                    </FormControl>
+                    <br />
+                    <FormControl >
+
+                        <FormLabel htmlFor='age'>Age</FormLabel>
+                        <Input
+                            type='number'
+                            id='age'
+
+                            value={age}
+                            onChange={handleAgeChange}
+                            placeholder='enter your age'
+                        />
 
                     </FormControl>
+                    <br />
+                    <br />
+
                     <Button colorScheme='teal' onClick={handleOnSubmit}
                         type='button' >Submit</Button>
 
@@ -89,4 +111,4 @@ function ModalSignIn({ showSignin, setShowSignin }) {
         </>
     )
 }
-export default ModalSignIn;
+export default SignUp;

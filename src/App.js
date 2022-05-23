@@ -10,6 +10,7 @@ import Header from './components/Header';
 import BodyPart from './components/BodyPart';
 import Footer from './components/Footer';
 import ModalSignIn from './components/ModalSignIn';
+import SignUp from './components/SignUp';
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -30,9 +31,13 @@ function App() {
             </>
           ) : showSignin === 1 ? (
             <ModalSignIn showSignin={showSignin} setShowSignin={setShowSignin} />
-          ) :
-            <>
-            </>
+          ) : showSignin === 2 ? (
+            <SignUp showSignin={showSignin} setShowSignin={setShowSignin} />
+
+          ) : (
+            <></>
+          )
+
 
           }
 

@@ -8,7 +8,7 @@ function BodyPart() {
     const [postsData, setPostsData] = useState([]);
     const [postId, setPostId] = useState(1);
     const { status, data, error, isFetching } = UsePosts();
-    const [postShow, setPostShow] = useState({})
+
 
     useEffect(() => {
 
